@@ -21,6 +21,7 @@ const Lang = imports.lang;
 const Gio = imports.gi.Gio;
 const Gtk = imports.gi.Gtk;
 const Shell = imports.gi.Shell;
+const Clutter = imports.gi.Clutter;
 
 const SwitcherPopup = imports.ui.switcherPopup;
 const AltTab = imports.ui.altTab;
@@ -48,10 +49,11 @@ const AppSwitcher_init_mod = function(apps, altTabPopup) {
 		let app = favorites[i];
 		if (addedApps.indexOf(app) < 0) {
 			let appIcon = new AltTab.AppIcon(app);
+			appIcon.actor.add_style_class_name('super-tab-launcher');
 			appIcon.cachedWindows = [0]; // Dirty hack to hide the arrow
 			this._addIcon(appIcon);
 			appIcon.cachedWindows = [];
-			appIcon.actor.opacity = 128;
+			//appIcon.actor.opacity = 128; // cannot set opacity through CSS?
 		}
 	}
 }

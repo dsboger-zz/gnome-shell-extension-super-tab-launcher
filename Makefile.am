@@ -7,7 +7,7 @@ SUBDIRS = src
 zip-file: all
 	rm -rf $(builddir)/{_build,_install,$(PACKAGE).zip}; \
 	$(MKDIR_P) $(builddir)/_build; \
-	cp -r $(srcdir)/src/*.{js,json} $(builddir)/_build; \
+	cp -r $(srcdir)/src/*.{js,json,css} $(builddir)/_build; \
 	(cd "$(builddir)/_build/"; \
 	zip -qr "$(abs_top_builddir)/$(PACKAGE).zip" .; \
 	); \

@@ -18,22 +18,11 @@
 
 const Lang = imports.lang;
 
-const Gio = imports.gi.Gio;
-const Gtk = imports.gi.Gtk;
 const Shell = imports.gi.Shell;
-const Clutter = imports.gi.Clutter;
 
 const SwitcherPopup = imports.ui.switcherPopup;
 const AltTab = imports.ui.altTab;
 const AppFavorites = imports.ui.appFavorites;
-
-const Main = imports.ui.main;
-const PopupMenu = imports.ui.popupMenu;
-const PanelMenu = imports.ui.panelMenu;
-
-const Config = imports.misc.config;
-const Util = imports.misc.util;
-
 
 
 let AppSwitcher_init_orig;
@@ -53,7 +42,7 @@ const AppSwitcher_init_mod = function(apps, altTabPopup) {
 			appIcon.cachedWindows = [0]; // Dirty hack to hide the arrow
 			this._addIcon(appIcon);
 			appIcon.cachedWindows = [];
-			//appIcon.actor.opacity = 128; // cannot set opacity through CSS?
+			appIcon.actor.opacity = 128; // cannot set opacity through CSS?
 		}
 	}
 }

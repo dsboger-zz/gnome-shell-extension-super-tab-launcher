@@ -50,8 +50,8 @@ const AppSwitcher_init_mod = function(apps, altTabPopup) {
 const AppSwitcherPopup_init_mod = function() {
 	AppSwitcherPopup_init_orig.apply(this, []);
 	if (this._switcherList == undefined) {
-		let apps = Shell.AppSystem.get_default().get_running();
-		this._switcherList = new AltTab.AppSwitcher(apps, this);
+		// we know there are no running apps, as we have no _switcherList
+		this._switcherList = new AltTab.AppSwitcher([], this);
 		this._items = this._switcherList.icons;
 	}
 }

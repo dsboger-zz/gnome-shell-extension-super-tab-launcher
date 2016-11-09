@@ -2,3 +2,10 @@
 
 A GNOME Shell extension that shows favorite app launchers in Super+Tab popup.
 
+## Installation
+
+```
+./autogen.sh
+./configure
+make localinstall
+```

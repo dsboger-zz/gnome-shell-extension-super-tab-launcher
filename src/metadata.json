@@ -4,5 +4,5 @@
     "name": "Super+Tab Launcher",
     "description": "A GNOME Shell extension that shows favorite app launchers in Super+Tab popup",
     "url": "https://github.com/dsboger/gnome-shell-extension-super-tab-launcher",
-    "version": 1
+    "version": 2
 }

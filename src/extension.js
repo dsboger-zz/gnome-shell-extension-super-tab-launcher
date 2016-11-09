@@ -36,14 +36,14 @@ const AppSwitcher_init_mod = function(apps, altTabPopup) {
 	let addedApps = this.icons.map(function(i) { return i.app; });
 	let favorites = AppFavorites.getAppFavorites().getFavorites();
 	for (let i in favorites) {
-		let app = favorites[i];
-		if (addedApps.indexOf(app) < 0) {
-			let appIcon = new AltTab.AppIcon(app);
+		let favoriteApp = favorites[i];
+		if (addedApps.indexOf(favoriteApp) < 0) {
+			let appIcon = new AltTab.AppIcon(favoriteApp);
 			appIcon.actor.add_style_class_name('super-tab-launcher');
-			appIcon.cachedWindows = [0]; // Dirty hack to hide the arrow
+			appIcon.actor.opacity = 128; // cannot set opacity through CSS?
+			appIcon.cachedWindows = ["Hi, I'm a window!"]; // hack to hide the arrow
 			this._addIcon(appIcon);
 			appIcon.cachedWindows = [];
-			appIcon.actor.opacity = 128; // cannot set opacity through CSS?
 		}
 	}
 }

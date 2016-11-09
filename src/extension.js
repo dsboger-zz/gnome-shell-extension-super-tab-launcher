@@ -32,6 +32,7 @@ let AppSwitcherPopup_finish_orig;
 
 const AppSwitcher_init_mod = function(apps, altTabPopup) {
 	AppSwitcher_init_orig.apply(this, [apps, altTabPopup]);
+	// addedApps may differ from apps if 'current-workspace-only' is set
 	let addedApps = this.icons.map(function(i) { return i.app; });
 	let favorites = AppFavorites.getAppFavorites().getFavorites();
 	for (let i in favorites) {
@@ -59,6 +60,7 @@ const AppSwitcherPopup_init_mod = function() {
 const AppSwitcherPopup_select_mod = function(app, window, forceAppFocus) {
 	let appIcon = this._items[app];
 	if (appIcon.cachedWindows.length == 0) {
+		// force not to show window thumbnails if app has no windows
 		window = null;
 		forceAppFocus = true;
 	}
@@ -68,6 +70,8 @@ const AppSwitcherPopup_select_mod = function(app, window, forceAppFocus) {
 const AppSwitcherPopup_finish_mod = function(timestamp) {
 	let appIcon = this._items[this._selectedIndex];
 	if (appIcon.cachedWindows.length == 0) {
+		// if app has no windows, launch it
+		// we do not activate() to respect 'current-workspace-only' setting
 		appIcon.app.open_new_window(-1);
 		SwitcherPopup.SwitcherPopup.prototype._finish.apply(this, [timestamp]);
 	} else {

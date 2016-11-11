@@ -16,10 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const Lang = imports.lang;
-
-const Shell = imports.gi.Shell;
-
 const SwitcherPopup = imports.ui.switcherPopup;
 const AltTab = imports.ui.altTab;
 const AppFavorites = imports.ui.appFavorites;

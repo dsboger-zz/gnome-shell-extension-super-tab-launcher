@@ -23,6 +23,7 @@ const AppFavorites = imports.ui.appFavorites;
 
 let AppSwitcher_init_orig;
 let AppSwitcherPopup_init_orig;
+let AppSwitcherPopup_initialSelection_orig;
 let AppSwitcherPopup_select_orig;
 let AppSwitcherPopup_finish_orig;
 
@@ -50,6 +51,16 @@ const AppSwitcherPopup_init_mod = function() {
 		// we know there are no running apps, as we have no _switcherList
 		this._switcherList = new AltTab.AppSwitcher([], this);
 		this._items = this._switcherList.icons;
+	}
+}
+
+const AppSwitcherPopup_initialSelection_mod = function(backward, binding) {
+	// favorites are always added after running apps, so if first icon has no windows,
+	// there are no running apps
+	if (this._items[0].cachedWindows.length == 0) {
+		this._select(0);
+	} else {
+		AppSwitcherPopup_initialSelection_orig.apply(this, [backward, binding]);
 	}
 }
 
@@ -85,6 +96,9 @@ function enable() {
 	AppSwitcherPopup_init_orig = AltTab.AppSwitcherPopup.prototype._init;
 	AltTab.AppSwitcherPopup.prototype._init = AppSwitcherPopup_init_mod;
 
+	AppSwitcherPopup_initialSelection_orig = AltTab.AppSwitcherPopup.prototype._initialSelection;
+	AltTab.AppSwitcherPopup.prototype._initialSelection = AppSwitcherPopup_initialSelection_mod;
+
 	AppSwitcherPopup_select_orig = AltTab.AppSwitcherPopup.prototype._select;
 	AltTab.AppSwitcherPopup.prototype._select = AppSwitcherPopup_select_mod;
 
@@ -98,6 +112,9 @@ function disable() {
 
 	AltTab.AppSwitcherPopup.prototype._init = AppSwitcherPopup_init_orig;
 	AppSwitcherPopup_init_orig = null;
+
+	AltTab.AppSwitcherPopup.prototype._initialSelection = AppSwitcherPopup_initialSelection_orig;
+	AppSwitcherPopup_initialSelection_orig = null;
 
 	AltTab.AppSwitcherPopup.prototype._select = AppSwitcherPopup_select_orig;
 	AppSwitcherPopup_select_orig = null;

@@ -1,6 +1,6 @@
 # GNOME Shell Extension: Super+Tab Launcher
 
-A GNOME Shell extension that shows favorite app launchers in Super+Tab popup.
+A GNOME Shell extension that shows favorite app launchers in Super/Alt+Tab popup (a.k.a. app switcher).
 
 Git repository: https://github.com/dsboger/gnome-shell-extension-super-tab-launcher
 
@@ -10,7 +10,7 @@ Have you ever tried to switch to an App, hit Super+Tab (or Alt+Tab) and just the
 
 ## Notes
 
- - Super+Tab Launcher was tested with GNOME Shell 3.22 only
+ - Super+Tab Launcher was tested with GNOME Shell 3.22 and 3.24 only
  - It may (and probably will) interfere with other extensions that also modify Super+Tab (or Alt+Tab) switcher. This scenario was not tested yet. If you find an incompatibility that you would like to see fixed, please file a bug report!
 
 ## Installation

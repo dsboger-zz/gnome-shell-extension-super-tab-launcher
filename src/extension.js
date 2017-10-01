@@ -202,7 +202,7 @@ function disable() {
 	AltTab.WindowSwitcherPopup.prototype._init = WindowSwitcherPopup_init_orig;
 	WindowSwitcherPopup_init_orig = null;
 
-	AltTab.WindowSwitcherPopup.prototype._initialSelection = null;
+	delete AltTab.WindowSwitcherPopup.prototype._initialSelection;
 
 	AltTab.WindowSwitcherPopup.prototype._finish = WindowSwitcherPopup_finish_orig;
 	WindowSwitcherPopup_finish_orig = null;

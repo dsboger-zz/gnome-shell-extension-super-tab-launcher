@@ -92,6 +92,7 @@ const AppSwitcherPopup_finish_mod = function(timestamp) {
 
 let WindowList_init_orig;
 let WindowSwitcherPopup_init_orig;
+let WindowSwitcherPopup_initialSelection_orig;
 let WindowSwitcherPopup_finish_orig;
 
 const WindowList_init_mod = function(windows, mode) {
@@ -172,6 +173,7 @@ function enable() {
 	WindowSwitcherPopup_init_orig = AltTab.WindowSwitcherPopup.prototype._init;
 	AltTab.WindowSwitcherPopup.prototype._init = WindowSwitcherPopup_init_mod;
 
+	WindowSwitcherPopup_initialSelection_orig = AltTab.WindowSwitcherPopup.prototype._initialSelection;
 	AltTab.WindowSwitcherPopup.prototype._initialSelection = WindowSwitcherPopup_initialSelection_mod;
 
 	WindowSwitcherPopup_finish_orig = AltTab.WindowSwitcherPopup.prototype._finish;
@@ -202,7 +204,8 @@ function disable() {
 	AltTab.WindowSwitcherPopup.prototype._init = WindowSwitcherPopup_init_orig;
 	WindowSwitcherPopup_init_orig = null;
 
-	delete AltTab.WindowSwitcherPopup.prototype._initialSelection;
+	AltTab.WindowSwitcherPopup.prototype._initialSelection = WindowSwitcherPopup_initialSelection_orig;
+	WindowSwitcherPopup_initialSelection_orig = null;
 
 	AltTab.WindowSwitcherPopup.prototype._finish = WindowSwitcherPopup_finish_orig;
 	WindowSwitcherPopup_finish_orig = null;

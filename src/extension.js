@@ -106,6 +106,7 @@ const WindowList_init_mod = function(windows, mode) {
 			appIcon.set_size(AltTab.APP_ICON_SIZE);
 			appIcon.actor.add_style_class_name('super-tab-launcher');
 			appIcon.actor.opacity = 128; // cannot set opacity through CSS?
+			appIcon.actor.remove_child(appIcon.label); // remove duplicated label
 			this.addItem(appIcon.actor, appIcon.label);
 			this.icons.push(appIcon);
 		}

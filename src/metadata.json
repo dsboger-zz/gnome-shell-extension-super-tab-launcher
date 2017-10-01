@@ -2,7 +2,7 @@
     "shell-version": ["3.22", "3.24"],
     "uuid": "gnome-shell-extension-super-tab-launcher.dsboger@gmail.com",
     "name": "Super+Tab Launcher",
-    "description": "A GNOME Shell extension that shows favorite app launchers in Super+Tab popup",
+    "description": "A GNOME Shell extension that shows favorite app launchers in Super+Tab (and Alt+Tab) popup",
     "url": "https://github.com/dsboger/gnome-shell-extension-super-tab-launcher",
-    "version": 3
+    "version": 4
 }

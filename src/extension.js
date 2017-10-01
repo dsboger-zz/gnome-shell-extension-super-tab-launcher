@@ -59,7 +59,7 @@ const AppSwitcherPopup_init_mod = function() {
 const AppSwitcherPopup_initialSelection_mod = function(backward, binding) {
 	// favorites are always added after running apps, so if first icon has no windows,
 	// there are no running apps
-	if (this._items[0].cachedWindows.length == 0) {
+	if (!backward && this._items[0].cachedWindows.length == 0) {
 		this._select(0);
 	} else {
 		AppSwitcherPopup_initialSelection_orig.apply(this, [backward, binding]);
@@ -125,7 +125,7 @@ const WindowSwitcherPopup_init_mod = function() {
 const WindowSwitcherPopup_initialSelection_mod = function(backward, binding) {
 	// favorites are always added after open windows, so if first icon has no window,
 	// there are no open windows
-	if (!this._items[0].window) {
+	if (!backward && !this._items[0].window) {
 		this._select(0);
 	} else {
 		SwitcherPopup.SwitcherPopup.prototype._initialSelection.apply(this, [backward, binding]);

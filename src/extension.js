@@ -119,7 +119,7 @@ const WindowSwitcherPopup_init_mod = function() {
 	if (this._switcherList == undefined) {
 		let mode = this._settings.get_enum('app-icon-mode');
 		// we know there are no windows, as we have no _switcherList
-        this._switcherList = new AltTab.WindowList([], mode);
+		this._switcherList = new AltTab.WindowList([], mode);
 		this._items = this._switcherList.icons;
 	}
 }

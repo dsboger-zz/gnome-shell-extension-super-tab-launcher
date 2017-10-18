@@ -21,6 +21,15 @@ const AltTab = imports.ui.altTab;
 const AppFavorites = imports.ui.appFavorites;
 const Shell = imports.gi.Shell;
 
+function openNewAppWindow(app) {
+	let appInfo = app.get_app_info();
+	if (appInfo.list_actions().indexOf('new-window') >= 0) {
+		appInfo.launch_action('new-window', null);
+	} else {
+		app.open_new_window(-1);
+	}
+}
+
 // App witcher mods
 
 let AppSwitcher_init_orig;
@@ -81,7 +90,7 @@ const AppSwitcherPopup_finish_mod = function(timestamp) {
 	if (appIcon.cachedWindows.length == 0) {
 		// if app has no windows, launch it
 		// we do not activate() to respect 'current-workspace-only' setting
-		appIcon.app.open_new_window(-1);
+		openNewAppWindow(appIcon.app);
 		SwitcherPopup.SwitcherPopup.prototype._finish.apply(this, [timestamp]);
 	} else {
 		AppSwitcherPopup_finish_orig.apply(this, [timestamp]);
@@ -139,7 +148,7 @@ const WindowSwitcherPopup_finish_mod = function() {
 	if (!icon.window) {
 		// if it is an app icon, launch the app
 		// we do not activate() to respect 'current-workspace-only' setting
-		icon.app.open_new_window(-1);
+		openNewAppWindow(icon.app);
 		SwitcherPopup.SwitcherPopup.prototype._finish.apply(this, []);
 	} else {
 		WindowSwitcherPopup_finish_orig.apply(this, []);

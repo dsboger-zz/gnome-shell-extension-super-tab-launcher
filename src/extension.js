@@ -22,11 +22,15 @@ const AppFavorites = imports.ui.appFavorites;
 const Shell = imports.gi.Shell;
 
 function openNewAppWindow(app) {
-	let appInfo = app.get_app_info();
-	if (appInfo.list_actions().indexOf('new-window') >= 0) {
-		appInfo.launch_action('new-window', null);
+	if (app.get_n_windows() == 0) {
+		app.launch(0, -1, false);
 	} else {
-		app.open_new_window(-1);
+		let appInfo = app.get_app_info();
+		if (appInfo.list_actions().indexOf('new-window') >= 0) {
+			appInfo.launch_action('new-window', null);
+		} else {
+			app.open_new_window(-1);
+		}
 	}
 }
 
@@ -107,7 +111,7 @@ let WindowSwitcherPopup_finish_orig;
 const WindowList_init_mod = function(windows, mode) {
 	WindowList_init_orig.apply(this, [windows, mode]);
 	
-	let addedApps = this.windows.map(function(w) { return Shell.WindowTracker.get_default().get_window_app(w); });
+	let addedApps = this.windows.map(w => Shell.WindowTracker.get_default().get_window_app(w));
 	let favorites = AppFavorites.getAppFavorites().getFavorites();
 	for (let i in favorites) {
 		let favoriteApp = favorites[i];

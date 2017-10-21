@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([GNOME Shell Extension Super+Tab Launcher], [4], [https://github.com/dsboger/gnome-shell-extension-super-tab-launcher/issues], [gnome-shell-extension-super-tab-launcher], [https://github.com/dsboger/gnome-shell-extension-super-tab-launcher])
+AC_INIT([GNOME Shell Extension Super+Tab Launcher], [5], [https://github.com/dsboger/gnome-shell-extension-super-tab-launcher/issues], [gnome-shell-extension-super-tab-launcher], [https://github.com/dsboger/gnome-shell-extension-super-tab-launcher])
 AC_CONFIG_SRCDIR([src/extension.js])
 AC_CONFIG_AUX_DIR([acaux])
 

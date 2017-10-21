@@ -72,8 +72,7 @@ const AppSwitcherPopup_init_mod = function() {
 const AppSwitcherPopup_initialSelection_mod = function(backward, binding) {
 	// favorites are always added after running apps, so if first icon has no windows,
 	// there are no running apps
-	if (!backward && this._items[0].cachedWindows.length == 0
-			&& (binding == 'switch-applications' || binding == 'switch-applications-backward')) {
+	if (this._items[0].cachedWindows.length == 0 && binding == 'switch-applications') {
 		this._select(0);
 	} else {
 		AppSwitcherPopup_initialSelection_orig.apply(this, [backward, binding]);

@@ -34,7 +34,6 @@ function openNewAppWindow(app) {
 	}
 }
 
-// App witcher mods
 
 let AppSwitcher_init_orig;
 let AppSwitcherPopup_init_orig;
@@ -105,7 +104,6 @@ function init(metadata) {
 }
 
 function enable() {
-	// App switcher mods
 	AppSwitcher_init_orig = AltTab.AppSwitcher.prototype._init;
 	AltTab.AppSwitcher.prototype._init = AppSwitcher_init_mod;
 
@@ -123,7 +121,6 @@ function enable() {
 }
 
 function disable() {
-	// App switcher mods
 	AltTab.AppSwitcher.prototype._init = AppSwitcher_init_orig;
 	AppSwitcher_init_orig = null;
 

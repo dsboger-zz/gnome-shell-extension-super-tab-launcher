@@ -34,8 +34,27 @@ function openNewAppWindow(app) {
 	}
 }
 
+function addLauncherForApp(app, switcher) {
+	let appIcon = new AltTab.AppIcon(app);
+	appIcon.actor.add_style_class_name('super-tab-launcher');
+	appIcon.actor.opacity = 128; // cannot set opacity through CSS?
+	appIcon.cachedWindows = ["Hi, I'm a window!"]; // hack to hide the arrow
+	switcher._addIcon(appIcon); // TODO add in the right position
+	appIcon.cachedWindows = [];
+	// do not remove icon when non-running app stops running...
+	appIcon.app.disconnect(appIcon._stateChangedId);
+	// ... but remove when it starts running
+	appIcon._stateChangedId = appIcon.app.connect('notify::state', app => {
+			if (app.state == Shell.AppState.RUNNING) {
+				switcher._removeIcon(app);
+			}
+		});
+	return appIcon;
+}
+
 
 let AppSwitcher_init_orig;
+let AppSwitcher_removeIcon_orig;
 let AppSwitcherPopup_init_orig;
 let AppSwitcherPopup_initialSelection_orig;
 let AppSwitcherPopup_select_orig;
@@ -49,12 +68,20 @@ const AppSwitcher_init_mod = function(apps, altTabPopup) {
 	for (let i in favorites) {
 		let favoriteApp = favorites[i];
 		if (addedApps.indexOf(favoriteApp) < 0) {
-			let appIcon = new AltTab.AppIcon(favoriteApp);
-			appIcon.actor.add_style_class_name('super-tab-launcher');
-			appIcon.actor.opacity = 128; // cannot set opacity through CSS?
-			appIcon.cachedWindows = ["Hi, I'm a window!"]; // hack to hide the arrow
-			this._addIcon(appIcon);
-			appIcon.cachedWindows = [];
+			addLauncherForApp(favoriteApp, this);
+		}
+	}
+}
+
+const AppSwitcher_removeIcon_mod = function(app) {
+	AppSwitcher_removeIcon_orig.apply(this, [app]);
+	// we may be removing a launcher, so check if app is runnning
+	if (app.state != Shell.AppState.RUNNING) {
+		let favorites = AppFavorites.getAppFavorites().getFavorites();
+		let favIndex = favorites.indexOf(app);
+		if (favIndex >= 0) {
+			let appIcon = addLauncherForApp(app, this);
+			appIcon.set_size(this._iconSize);
 		}
 	}
 }
@@ -107,6 +134,9 @@ function enable() {
 	AppSwitcher_init_orig = AltTab.AppSwitcher.prototype._init;
 	AltTab.AppSwitcher.prototype._init = AppSwitcher_init_mod;
 
+	AppSwitcher_removeIcon_orig = AltTab.AppSwitcher.prototype._removeIcon;
+	AltTab.AppSwitcher.prototype._removeIcon = AppSwitcher_removeIcon_mod;
+
 	AppSwitcherPopup_init_orig = AltTab.AppSwitcherPopup.prototype._init;
 	AltTab.AppSwitcherPopup.prototype._init = AppSwitcherPopup_init_mod;
 
@@ -123,6 +153,9 @@ function enable() {
 function disable() {
 	AltTab.AppSwitcher.prototype._init = AppSwitcher_init_orig;
 	AppSwitcher_init_orig = null;
+
+	AltTab.AppSwitcher.prototype._removeIcon = AppSwitcher_removeIcon_orig;
+	AppSwitcher_removeIcon_orig = null;
 
 	AltTab.AppSwitcherPopup.prototype._init = AppSwitcherPopup_init_orig;
 	AppSwitcherPopup_init_orig = null;

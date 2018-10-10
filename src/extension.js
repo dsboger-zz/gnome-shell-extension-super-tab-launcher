@@ -36,8 +36,13 @@ function openNewAppWindow(app) {
 
 function addLauncherForApp(app, switcher) {
     let appIcon = new AltTab.AppIcon(app);
-    appIcon.actor.add_style_class_name('super-tab-launcher');
-    appIcon.actor.opacity = 128; // cannot set opacity through CSS?
+    if (appIcon.actor) { // compatibility with <= 3.30.1
+        appIcon.actor.add_style_class_name('super-tab-launcher');
+        appIcon.actor.opacity = 128; // cannot set opacity through CSS?
+    } else {
+        appIcon.add_style_class_name('super-tab-launcher');
+        appIcon.opacity = 128; // cannot set opacity through CSS?
+    }
     appIcon.cachedWindows = ["Hi, I'm a window!"]; // hack to hide the arrow
     switcher._addIcon(appIcon); // TODO add in the right position
     appIcon.cachedWindows = [];

@@ -101,13 +101,29 @@ const AppSwitcherPopup_init_mod = function() {
 }
 
 const AppSwitcherPopup_initialSelection_mod = function(backward, binding) {
-    // favorites are always added after running apps, so if first icon has no windows,
-    // there are no running apps
-    if (this._items[0].cachedWindows.length == 0 && binding == 'switch-applications') {
-        this._select(0);
-    } else {
-        AppSwitcherPopup_initialSelection_orig.apply(this, [backward, binding]);
+    if (binding == 'switch-applications') {
+        // favorites are always added after running apps, so if first icon has no windows,
+        // there are no running apps
+        if (this._items[0].cachedWindows.length == 0) {
+            this._select(0);
+            return;
+        }
+
+        if (this._items.length > 1 && this._items[1].cachedWindows.length == 0) {
+            let firstAppHasFocus = false;
+            for (let window of this._items[0].app.get_windows()) {
+                if (window.has_focus()) {
+                    firstAppHasFocus = true;
+                    break;
+                }
+            }
+            if (!firstAppHasFocus) {
+                this._select(0);
+                return;
+            }
+        }
     }
+    AppSwitcherPopup_initialSelection_orig.apply(this, [backward, binding]);
 }
 
 const AppSwitcherPopup_select_mod = function(app, window, forceAppFocus) {

@@ -2,7 +2,9 @@
   "name": "Alt+Tab Launcher",
   "description": "Launch favorite apps from Alt+Tab (and Super+Tab) popup",
   "uuid": "alt-launcher@oxayotl.github.io",
+  "url": "https://github.com/oxayotl/gnome-shell-extension-alt-tab-launcher",
   "shell-version": [
     "45"
-  ]
+  ],
+  "version": 1
 }
